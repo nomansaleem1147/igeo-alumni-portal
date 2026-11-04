@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block title %}Alumni Registration{% endblock %}{% block content %}
+<div class="page-heading"><span class="eyebrow">ALUMNI REGISTRATION</span><h1>Reserve your place.</h1><p>Complete your details and submit your payment receipt.</p></div>
+<form method="post" enctype="multipart/form-data" class="panel form-grid">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="field"><label>Full name *</label><input name="full_name" required maxlength="120" placeholder="Your full name"></div>
+<div class="field"><label>Batch / Passing year *</label><input name="batch" required placeholder="e.g. 2020–2024"></div>
+<div class="field"><label>University registration number *</label><input name="registration_number" required maxlength="80"></div>
+<div class="field"><label>Email address *</label><input type="email" name="email" required></div>
+<div class="field"><label>Contact number *</label><input name="contact_number" required placeholder="+92 3XX XXXXXXX"></div>
+<div class="field"><label>Employment status *</label><select name="employment_status" id="employment" required><option value="">Select status</option><option value="Employed">Employed</option><option value="Self-employed">Self-employed</option><option value="Student">Currently studying</option><option value="Not employed">Not employed</option></select></div>
+<div class="field conditional"><label>Organization / company</label><input name="organization" placeholder="Where are you working?"></div>
+<div class="field conditional"><label>Current designation</label><input name="designation" placeholder="Your job title"></div>
+<div class="full"><h2>Payment details</h2><p class="muted">Registration fee: <strong>{{ currency }} {{ "{:,}".format(registration_fee) }}</strong></p><div class="payment-box">
+<div>{% if qr_image %}<img class="payment-qr" src="{{ url_for('static', filename='images/' + qr_image) }}" alt="Payment QR code" onerror="this.style.display='none'">{% endif %}<h3>Scan to pay</h3><p class="muted">Use your banking or wallet app to scan the official payment QR.</p></div>
+<div class="account"><p><b>Account title</b><br>{{ account_title }}</p><p><b>Bank / wallet</b><br>{{ bank_name }}</p><p><b>Account number</b><br>{{ account_number }}</p></div></div><p class="muted">{{ payment_instructions }}</p></div>
+<div class="field full"><label>Upload payment screenshot / receipt * (JPG, PNG or PDF; max 8 MB)</label><input type="file" name="receipt" accept=".jpg,.jpeg,.png,.pdf" required></div>
+<div class="full"><label class="check"><input type="checkbox" required> I confirm that the information provided is accurate and understand that ticket issuance is subject to admin payment verification.</label></div>
+<div class="full"><button class="btn primary" type="submit">Submit registration</button></div>
+</form>
+<script>const employment=document.getElementById('employment');function toggleEmployment(){document.querySelectorAll('.conditional').forEach(el=>el.style.display=['Employed','Self-employed'].includes(employment.value)?'block':'none')}employment.addEventListener('change',toggleEmployment);toggleEmployment();</script>
+{% endblock %}
