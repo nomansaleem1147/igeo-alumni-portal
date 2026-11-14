@@ -33,7 +33,7 @@ csrf = CSRFProtect(app)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf"}
 EVENT_NAME = os.getenv("EVENT_NAME", "IGEO Alumni Annual Dinner 2026")
-FEE = int(os.getenv("REGISTRATION_FEE", "4000"))
+FEE = int(os.getenv("REGISTRATION_FEE", "5000"))
 CURRENCY = os.getenv("CURRENCY", "PKR")
 
 class Alumni(db.Model):
